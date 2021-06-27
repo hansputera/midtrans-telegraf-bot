@@ -1,0 +1,38 @@
+import type { Context, NarrowedContext } from "telegraf";
+import type { Update, Message } from "typegram";
+
+export type CommandContext = NarrowedContext<Context, Update> & {
+    message: Message.TextMessage;
+};
+
+export interface Customer {
+    id: number;
+    email: string;
+    verified: boolean;
+    createdAt: string;
+    changedAt: string;
+}
+
+export interface Transaction {
+    id: string;
+    customerId: number;
+    quantity: number;
+    price: number;
+    paid: boolean;
+    payment: string;
+}
+
+export interface CommandProps {
+    name: string;
+    description: string;
+    aliases: string[];
+    cooldown?: number;
+    ownerOnly?: boolean;
+}
+
+export interface CategoryConfig {
+    name: string;
+    hidden: boolean;
+    commands: CommandProps[];
+    path: string;
+}
