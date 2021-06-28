@@ -10,16 +10,20 @@ export interface Customer {
     email: string;
     verified: boolean;
     createdAt: string;
-    changedAt: string;
+    updatedAt: string;
 }
 
 export interface Transaction {
     id: string;
+    item: string;
     customerId: number;
     quantity: number;
     price: number;
     paid: boolean;
     payment: string;
+    token: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface CommandProps {
@@ -35,4 +39,14 @@ export interface CategoryConfig {
     hidden: boolean;
     commands: CommandProps[];
     path: string;
+}
+
+export interface Product {
+    id: string;
+    name: string;
+    price: number;
+    createdAt: string;
+    updatedAt: string;
+    stocks: number;
+    description: string;
 }

@@ -8,6 +8,9 @@ TransactionModel.init({
         type: STRING,
         primaryKey: true
     },
+    item: {
+        type: STRING
+    },
     customerId: {
         type: INTEGER
     },
@@ -25,6 +28,10 @@ TransactionModel.init({
     payment: {
         type: STRING,
         defaultValue: "notyet"
+    },
+    token: {
+        type: STRING,
+        defaultValue: ""
     }
 }, {
     sequelize: database,

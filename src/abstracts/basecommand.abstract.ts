@@ -17,7 +17,7 @@ export default abstract class BaseCommand {
         const commandes = [detail.name].concat(detail.aliases);
         this.client.command(commandes, async (ctx) => {
             const cmdEntity = ctx.message.entities.find(entity => entity.type == "bot_command");
-            const args = ctx.message.text.replace(ctx.message.text.slice(cmdEntity.offset, cmdEntity.length), "").trim().split(/ +/g);
+            const args = ctx.message.text.replace(ctx.message.text.slice(cmdEntity.offset, cmdEntity.length), "").trim().split(/ +/g).filter(x => x.length);
             await this.execute(ctx, args);
         });
     }
