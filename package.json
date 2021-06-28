@@ -6,6 +6,7 @@
   "author": "Hanif",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.21.1",
     "chalk": "^4.1.1",
     "deep-email-validator": "^0.1.18",
     "midtrans-node": "https://github.com/hansputera/midtrans-node",
