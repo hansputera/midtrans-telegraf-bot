@@ -1,6 +1,8 @@
+import * as config from "../config";
 import Chalk from "chalk";
 import MidtransBot from "../client/bot";
 import type { CommandContext, CommandProps } from "../types";
+import CooldownManage from "../util/cooldown";
 
 export default abstract class BaseCommand {
     constructor(public detail: CommandProps, public client: MidtransBot) {
@@ -16,6 +18,9 @@ export default abstract class BaseCommand {
         // telegraf composer
         const commandes = [detail.name].concat(detail.aliases);
         this.client.command(commandes, async (ctx) => {
+            if (detail.ownerOnly && !config.OWNERS_ID.includes(ctx.from.id)) return;
+            const cooldown = CooldownManage(ctx.from.id, detail.cooldown, detail.name);
+            if (cooldown && cooldown.timeLeft) return await ctx.replyWithMarkdown(`Please wait about \`${cooldown.timeLeft.toFixed(2)} more second(s)\` to use this command because you are in a cooldown period.`);
             const cmdEntity = ctx.message.entities.find(entity => entity.type == "bot_command");
             const args = ctx.message.text.replace(ctx.message.text.slice(cmdEntity.offset, cmdEntity.length), "").trim().split(/ +/g).filter(x => x.length);
             await this.execute(ctx, args);
