@@ -24,6 +24,7 @@ export interface Transaction {
     token: string;
     createdAt: string;
     updatedAt: string;
+    sellerGive: string;
 }
 
 export interface CommandProps {

@@ -3,6 +3,7 @@ import * as config from "../config";
 import type MidtransBot from "../client/bot";
 import TransactionModel from "../models/transaction.model";
 import type { Transaction } from "../types";
+import Encryption from "../util/encryption";
 
 export default class TransactionController {
     public _transactionModel = TransactionModel;
@@ -44,7 +45,7 @@ export default class TransactionController {
                 order_id: id
             },
             customer_details: {
-                email: user.email,
+                email: Encryption.aes256_decrypt(user.email),
                 country_code: "IDN"
             },
             item_details: [
@@ -59,7 +60,7 @@ export default class TransactionController {
 
         object["token"] = tre.token;
         await this._transactionModel.create(object);
-        return true;
+        return tre;
     }
 
     public async cancel(id: string) {
