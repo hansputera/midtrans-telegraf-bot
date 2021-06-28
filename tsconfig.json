@@ -6,7 +6,7 @@
         "pretty": true,
         "module": "CommonJS",
         "target": "ES2016",
-        "esModuleInterop": true
+        "esModuleInterop": true,
     },
     "exclude": ["node_modules"],
     "src": ["src/**/*"]

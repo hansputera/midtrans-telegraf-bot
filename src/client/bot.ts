@@ -10,6 +10,7 @@ import CommandsLoader from "../loaders/commands.loader";
 import CustomerController from "../controllers/customer.controller";
 import TransactionController from "../controllers/transaction.controller";
 import ProductController from "../controllers/product.controller";
+import VerificationController from "../controllers/verification.controller";
 
 // Payment gateway handlers
 import midtrans from "./midtrans";
@@ -26,6 +27,7 @@ export default class MidtransBot extends Telegraf {
     public customer = new CustomerController();
     public transaction = new TransactionController(this);
     public product = new ProductController();
+    public verification = new VerificationController(this);
 
     // Midtrans
     public midtrans = midtrans;

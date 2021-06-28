@@ -1,16 +1,19 @@
 import * as crypto from "crypto";
 import * as config from "../config";
 
-const iv = crypto.randomBytes(36);
+const iv = crypto.randomBytes(16);
 
 export default class Encryption {
     static aes256(text: string) {
-        const cipher = crypto.createCipheriv("aes-256-gcm", config.encryptionKey, iv);
-        return cipher.update(text, "utf-8", "hex") + cipher.final("hex");
+        const cipher = crypto.createCipheriv("aes-256-ctr", config.encryptionKey, iv);
+        const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
+        return encrypted.toString("hex");
     }
 
     static aes256_decrypt(hash: string) {
-        const decipher = crypto.createDecipheriv("aes-256-gcm", config.encryptionKey, iv);
-        return decipher.update(hash, "hex", "utf-8") + decipher.final("utf-8");
+        const encrypted = Buffer.from(hash, "hex");
+        const decipher = crypto.createDecipheriv("aes-256-ctr", config.encryptionKey, iv);
+        const decrypted = Buffer.concat([decipher.update(encrypted), decipher.final()]);
+        return decrypted.toString();
     }
 }

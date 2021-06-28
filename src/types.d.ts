@@ -50,3 +50,11 @@ export interface Product {
     stocks: number;
     description: string;
 }
+
+export interface Verification {
+    id: number;
+    email: string;
+    code: string;
+    createdAt: string;
+    updatedAt: string;
+}
