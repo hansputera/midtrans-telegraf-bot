@@ -53,8 +53,7 @@ export default class ProductController {
     }
 
     public async insert(item: string, price: number, stocks = 1, description = "A Product") {
-        const ids = crypto.randomUUID().split("-");
-        const id = ids[Math.floor(Math.random() * ids.length)];
+        const id = crypto.randomUUID().split("-")[0];
 
         const object = {
             id,
