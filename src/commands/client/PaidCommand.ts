@@ -2,6 +2,7 @@ import BaseCommand from "../../abstracts/basecommand.abstract";
 import type MidtransBot from "../../client/bot";
 import type { CommandContext } from "../../types";
 import * as config from "../../config";
+import StrukPrinter from "../../util/struk";
 
 export default class PaidCommand extends BaseCommand {
     constructor(client: MidtransBot) {
@@ -32,6 +33,13 @@ export default class PaidCommand extends BaseCommand {
                 where: {
                     id: code
                 }
+            });
+            const foto = await StrukPrinter.printStructPay(tr.payment_type, P.id, P.item, P.price, P.quantity);
+            const m = await ctx.replyWithPhoto({ source: foto }, {
+                caption: `${ctx.from.id} | ${P.id} | CONFIRMED STRUCT`
+            });
+            config.OWNERS_ID.forEach(owner => {
+                ctx.telegram.forwardMessage(owner, ctx.chat.id, m.message_id);
             });
             return await ctx.reply("Your payment has been confirmed, and the seller has been contacted. Please wait until further notice.");
         } else {

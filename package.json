@@ -12,6 +12,7 @@
     "midtrans-node": "https://github.com/hansputera/midtrans-node",
     "mysql2": "^2.2.5",
     "nodemailer": "^6.6.2",
+    "puppeteer-core": "^10.1.0",
     "sequelize": "^6.6.4",
     "telegraf": "^4.3.0"
   },

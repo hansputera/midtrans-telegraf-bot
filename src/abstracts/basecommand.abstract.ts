@@ -12,6 +12,9 @@ export default abstract class BaseCommand {
         // Pass optional properties
         if (!detail.cooldown) detail.cooldown = 5000; 
         if (!detail.ownerOnly) detail.ownerOnly = false;
+        if (!detail.privateOnly) detail.privateOnly = true;
+        if (!detail.groupOnly) detail.groupOnly = false;
+
         this.client.commands.maps.set(detail.name, this);
         console.log(Chalk.red(`${detail.name} command loaded`));
 
@@ -19,6 +22,8 @@ export default abstract class BaseCommand {
         const commandes = [detail.name].concat(detail.aliases);
         this.client.command(commandes, async (ctx) => {
             if (detail.ownerOnly && !config.OWNERS_ID.includes(ctx.from.id)) return;
+            if (detail.privateOnly && ctx.chat.type != "private") return;
+            if (detail.groupOnly && !["supergroup", "group"].includes(ctx.chat.type)) return;
             const cooldown = CooldownManage(ctx.from.id, detail.cooldown, detail.name);
             if (cooldown && cooldown.timeLeft) return await ctx.replyWithMarkdown(`Please wait about \`${cooldown.timeLeft.toFixed(2)} more second(s)\` to use this command because you are in a cooldown period.`);
             const cmdEntity = ctx.message.entities.find(entity => entity.type == "bot_command");

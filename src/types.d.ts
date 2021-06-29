@@ -24,7 +24,6 @@ export interface Transaction {
     token: string;
     createdAt: string;
     updatedAt: string;
-    sellerGive: string;
 }
 
 export interface CommandProps {
@@ -33,6 +32,8 @@ export interface CommandProps {
     aliases: string[];
     cooldown?: number;
     ownerOnly?: boolean;
+    privateOnly?: boolean;
+    groupOnly?: boolean;
 }
 
 export interface CategoryConfig {

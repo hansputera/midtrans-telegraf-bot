@@ -33,10 +33,6 @@ TransactionModel.init({
         type: STRING,
         defaultValue: ""
     },
-    sellerGive: {
-        type: STRING,
-        defaultValue: ""
-    },
 }, {
     sequelize: database,
     modelName: "transactions"
