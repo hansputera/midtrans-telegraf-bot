@@ -20,7 +20,7 @@ export default class ListTrasactionCommand extends BaseCommand {
 
         if (!trss.length) return await ctx.reply("You don't have any transactions");
         else {
-            const text = `This is your list of transactions:\n\n${trss.map((tr, i) => `${i+1}. (ID: \`${tr.id}\`) | ${tr.item} | ${tr.paid ? "You've paid for it with " + tr.payment : "Not paid"}`).join("\n")}\n\nGet transaction details in the following format \`"/trinfo ID_TRANSACTION"\``;
+            const text = `This is your list of transactions:\n\n${trss.map((tr, i) => `${i+1}. (ID: \`${tr.id}\`) | ${tr.item} | ${tr.paid ? "You've paid for it with " + tr.payment.replace(/[^a-zA-Z0-9]/g, " ") : "Not paid"}`).join("\n")}\n\nGet transaction details in the following format \`"/trinfo ID_TRANSACTION"\``;
             return await ctx.replyWithMarkdown(text);
         }
     }

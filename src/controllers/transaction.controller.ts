@@ -41,7 +41,7 @@ export default class TransactionController {
 
         const tre = await this.client.midtrans.createTransaction({
             transaction_details: {
-                gross_amount: object.price,
+                gross_amount: Number(object.price) * object.quantity,
                 order_id: id
             },
             customer_details: {
