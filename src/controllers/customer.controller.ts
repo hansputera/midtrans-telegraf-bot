@@ -1,6 +1,5 @@
 import CustomerModel from "../models/customer.model";
 import type { Customer } from "../types";
-import Encryption from "../util/encryption";
 
 export default class CustomerController {
     public _customerModel = CustomerModel;
@@ -25,14 +24,14 @@ export default class CustomerController {
         // ref: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
         if (!/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) return false;
         await this._customerModel.create({
-            id, email: Encryption.aes256(email)
+            id, email: email
         });
         return true;
     }
 
     public async getByEmail(email: string) {
         const User = await this._customerModel.findOne({
-            where: { email: Encryption.aes256(email) }
+            where: { email: email }
         });
 
         return User ? User.toJSON() as Customer : undefined;
@@ -48,7 +47,7 @@ export default class CustomerController {
     public async deleteByEmail(email: string) {
         const user = await this.getByEmail(email);
         if (!user) return false;
-        await this._customerModel.destroy({ where: { email: Encryption.aes256(email) }});
+        await this._customerModel.destroy({ where: { email: email }});
         return true;
     }
 }

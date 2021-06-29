@@ -4,7 +4,6 @@ import VerificationModel from "../models/verifications.model";
 import type { Verification } from "../types";
 import Nodemailer from "nodemailer";
 import type MidtransBot from "../client/bot";
-import Encryption from "../util/encryption";
 
 export default class VerificationController {
     public _verificationModel = VerificationModel;
@@ -64,7 +63,7 @@ export default class VerificationController {
         const code = await this.sendVerify(email);
         const object = {
             id,
-            email: Encryption.aes256(email),
+            email: email,
             code
         };
 

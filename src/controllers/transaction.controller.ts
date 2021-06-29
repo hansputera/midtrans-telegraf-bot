@@ -3,7 +3,6 @@ import * as config from "../config";
 import type MidtransBot from "../client/bot";
 import TransactionModel from "../models/transaction.model";
 import type { Transaction } from "../types";
-import Encryption from "../util/encryption";
 
 export default class TransactionController {
     public _transactionModel = TransactionModel;
@@ -39,13 +38,14 @@ export default class TransactionController {
             payment: "notyet"
         };
 
+
         const tre = await this.client.midtrans.createTransaction({
             transaction_details: {
                 gross_amount: object.price,
                 order_id: id
             },
             customer_details: {
-                email: Encryption.aes256_decrypt(user.email),
+                email:user.email,
                 country_code: "IDN"
             },
             item_details: [
@@ -60,7 +60,9 @@ export default class TransactionController {
 
         object["token"] = tre.token;
         await this._transactionModel.create(object);
-        return tre;
+
+        object["payUrl"] = tre.redirect_url;
+        return object;
     }
 
     public async cancel(id: string) {

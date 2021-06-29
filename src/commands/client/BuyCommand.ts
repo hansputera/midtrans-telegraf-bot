@@ -1,6 +1,6 @@
 import BaseCommand from "../../abstracts/basecommand.abstract";
 import type MidtransBot from "../../client/bot";
-import type { CommandContext } from "../../types";
+import type { CommandContext, Transaction } from "../../types";
 
 export default class BuyCommand extends BaseCommand {
     constructor(client: MidtransBot) {
@@ -26,7 +26,8 @@ export default class BuyCommand extends BaseCommand {
         const tr = await this.client.transaction.insert(ctx.from.id, product.name, product.price, Number(quantity));
         if (!tr) return await ctx.reply("Sesuatu ada yang salah dengan sistem");
         else {
-            console.log(tr.redirect_url);   
+            const textSend = `- Transaction ID: ${tr.id}\n- Price: Rp. ${(tr.price * tr.quantity).toLocaleString()}\n- Product: ${tr.item}\n- Qty: ${tr.quantity}\n\n- Payment URL: ${(tr as Transaction & { payUrl: string; }).payUrl}\nAfter do payment, please verify your payment with \`"/paid ${tr.id}"\`, if you want cancel this transaction do \`"/cancel ${tr.id}"\``;
+            await ctx.replyWithMarkdown(textSend);
         }
     }
 }
