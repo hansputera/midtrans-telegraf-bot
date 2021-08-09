@@ -22,6 +22,7 @@ export interface Transaction {
     paid: boolean;
     payment: string;
     token: string;
+    product_customer: boolean;
     createdAt: string;
     updatedAt: string;
 }

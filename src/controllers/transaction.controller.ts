@@ -68,7 +68,8 @@ export default class TransactionController {
     public async cancel(id: string) {
         const tr = await this.getById(id);
         if (!tr) return false;
-        await this.client.midtrans.cancelTransaction(id);
+        await this.client.product.add(tr.item, tr.quantity);
+        console.log(await this.client.midtrans.cancelTransaction(id));
         await this._transactionModel.destroy({ where: { id }});
         return true;
     }

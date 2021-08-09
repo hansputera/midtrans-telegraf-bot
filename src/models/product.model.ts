@@ -21,7 +21,7 @@ ProductModel.init({
     },
     description: {
         type: STRING
-    }
+    },
 }, {
     sequelize: database,
     modelName: "products"

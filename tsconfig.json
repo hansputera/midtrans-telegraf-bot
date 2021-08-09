@@ -8,6 +8,6 @@
         "target": "ES2016",
         "esModuleInterop": true,
     },
-    "exclude": ["node_modules"],
+    "exclude": ["node_modules","dist"],
     "src": ["src/**/*"]
 }

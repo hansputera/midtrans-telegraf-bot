@@ -33,6 +33,10 @@ TransactionModel.init({
         type: STRING,
         defaultValue: ""
     },
+    product_customer: {
+        type: BOOLEAN,
+        defaultValue: false
+    }
 }, {
     sequelize: database,
     modelName: "transactions"
